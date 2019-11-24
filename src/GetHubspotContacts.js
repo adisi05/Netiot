@@ -2,7 +2,7 @@ const axios = require('axios');
 const _ = require('lodash');
 const fs = require('fs-extra');
 
-const apiKey = 'acc986e8-317d-46aa-a192-59b0e5f1affb';
+const apiKey = '';
 const endpoint = `https://api.hubapi.com/contacts/v1/lists/all/contacts/all?hapikey=${apiKey}&property=areas_of_help&property=contact_via
 &property=facebook&property=professional_background_and_experience&property=more_about_you&property=volunteer_areas&property=email
 &property=city&property=firstname&property=lastname&property=hs_object_id&property=phonec&property=reatedate`;
@@ -31,10 +31,6 @@ const getPaginatedResults = (url, dict, offset, path) =>
             const la = result.data.contacts;
             const mapped = _.map(la, contact => {
                 const id = _.get(contact, 'canonical-vid', null);
-                if (id === null) {
-                    console.log('NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-                    console.log(contact);
-                }
                 return parseContact(contact.properties, id);
             });
             if (result.data['has-more']) {
@@ -47,7 +43,7 @@ const getPaginatedResults = (url, dict, offset, path) =>
         })
         .catch(err => console.log(err));
 
-getPaginatedResults(endpoint, [], 0, './src/data/contacts.json');
+getPaginatedResults(endpoint, [], 0, './data/contacts.json');
 
 // axios({
 //     method: 'GET',
